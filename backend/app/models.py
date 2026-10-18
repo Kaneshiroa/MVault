@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import DateTime, Integer, String, Text
+from sqlalchemy import DateTime, Float, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 from .database import Base
 
@@ -19,8 +19,9 @@ class MediaItem(Base):
     progress: Mapped[int] = mapped_column(Integer, default=0)
     total_units: Mapped[int | None] = mapped_column(Integer, nullable=True)
     unit_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    season_number: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
-    rating: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    rating: Mapped[float | None] = mapped_column(Float, nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
