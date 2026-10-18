@@ -3,7 +3,8 @@ from pydantic import BaseModel, ConfigDict
 
 class MediaItemBase(BaseModel):
     title: str
-    media_type: str
+    category: str
+    format: str
     status: str = "planned"
     
     progress: int = 0

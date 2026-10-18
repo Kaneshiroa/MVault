@@ -10,7 +10,8 @@ class MediaItem(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     title: Mapped[str] = mapped_column(String(255), index=True)
-    media_type: Mapped[str] = mapped_column(String(30))
+    category: Mapped[str] = mapped_column(String(30))
+    format: Mapped[str] = mapped_column(String(30))
     status: Mapped[str] = mapped_column(String(30), default="planned")
 
     #Total_units represents the total number of units in the media item (e.g., total episodes, total chapters, etc.)
