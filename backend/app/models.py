@@ -14,7 +14,7 @@ class MediaItem(Base):
     status: Mapped[str] = mapped_column(String(30), default="planned")
 
     #Total_units represents the total number of units in the media item (e.g., total episodes, total chapters, etc.)
-    #Unit
+    #Unit_type represents the type of unit (e.g., episodes, chapters, etc.)
     progress: Mapped[int] = mapped_column(Integer, default=0)
     total_units: Mapped[int | None] = mapped_column(Integer, nullable=True)
     unit_type: Mapped[str | None] = mapped_column(String(20), nullable=True)

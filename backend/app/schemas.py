@@ -14,10 +14,8 @@ class MediaItemBase(BaseModel):
     notes: str | None = None
     
 class MediaItemCreate(MediaItemBase):
-    id:int
-    created_at: datetime = datetime.now()
-    
-    model_config = ConfigDict(from_attributes=True)
+    #Inherits from MediaItemBase and adds any additional fields needed for creating a media item
+    pass
     
 class MediaItemRead(MediaItemBase):
     id: int
