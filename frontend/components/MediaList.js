@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Loads the user's media library, filters the visible titles,
+ * Loads the user's media library, filters and sorts visible titles,
  * and coordinates updates and deletions from individual media cards.
  */
 
@@ -36,6 +36,7 @@ export default function MediaList({ refreshKey }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedFormat, setSelectedFormat] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedSort, setSelectedSort] = useState("newest");
 
   let formatOptions = [];
 
@@ -64,6 +65,71 @@ export default function MediaList({ refreshKey }) {
     if (matchesCategory && matchesFormat && matchesStatus) {
       visibleMediaItems.push(item);
     }
+  }
+
+  const sortedMediaItems = visibleMediaItems.slice();
+
+  if (selectedSort === "newest") {
+    sortedMediaItems.sort((firstItem, secondItem) => {
+      const firstDate = new Date(firstItem.created_at);
+      const secondDate = new Date(secondItem.created_at);
+
+      return secondDate - firstDate;
+    });
+  }
+
+  if (selectedSort === "title_ascending") {
+    sortedMediaItems.sort((firstItem, secondItem) => {
+      return firstItem.title.localeCompare(secondItem.title);
+    });
+  }
+
+  if (selectedSort === "title_descending") {
+    sortedMediaItems.sort((firstItem, secondItem) => {
+      return secondItem.title.localeCompare(firstItem.title);
+    });
+  }
+
+  if (selectedSort === "rating_high") {
+    sortedMediaItems.sort((firstItem, secondItem) => {
+      if (
+        firstItem.rating === null &&
+        secondItem.rating === null
+      ) {
+        return 0;
+      }
+
+      if (firstItem.rating === null) {
+        return 1;
+      }
+
+      if (secondItem.rating === null) {
+        return -1;
+      }
+
+      return secondItem.rating - firstItem.rating;
+    });
+  }
+
+  if (selectedSort === "rating_low") {
+    sortedMediaItems.sort((firstItem, secondItem) => {
+      if (
+        firstItem.rating === null &&
+        secondItem.rating === null
+      ) {
+        return 0;
+      }
+
+      if (firstItem.rating === null) {
+        return 1;
+      }
+
+      if (secondItem.rating === null) {
+        return -1;
+      }
+
+      return firstItem.rating - secondItem.rating;
+    });
   }
 
   useEffect(() => {
@@ -172,7 +238,7 @@ export default function MediaList({ refreshKey }) {
     <section className="mt-10">
       <h2 className="text-2xl font-semibold">Your library</h2>
 
-      <div className="mt-4 grid gap-4 rounded-xl border border-zinc-800 bg-zinc-900 p-4 md:grid-cols-3">
+      <div className="mt-4 grid gap-4 rounded-xl border border-zinc-800 bg-zinc-900 p-4 md:grid-cols-2 xl:grid-cols-4">
         <label className="grid gap-2 text-sm">
           <span className="text-zinc-300">Category</span>
           <select
@@ -217,6 +283,21 @@ export default function MediaList({ refreshKey }) {
             <option value="completed">Completed</option>
           </select>
         </label>
+
+        <label className="grid gap-2 text-sm">
+          <span className="text-zinc-300">Sort by</span>
+          <select
+            value={selectedSort}
+            onChange={(event) => setSelectedSort(event.target.value)}
+            className="rounded-md bg-zinc-800 px-3 py-2"
+          >
+            <option value="newest">Recently added</option>
+            <option value="title_ascending">Title A–Z</option>
+            <option value="title_descending">Title Z–A</option>
+            <option value="rating_high">Highest rated</option>
+            <option value="rating_low">Lowest rated</option>
+          </select>
+        </label>
       </div>
 
       {message && (
@@ -233,14 +314,14 @@ export default function MediaList({ refreshKey }) {
 
       {!message &&
         mediaItems.length > 0 &&
-        visibleMediaItems.length === 0 && (
+        sortedMediaItems.length === 0 && (
           <p className="mt-4 text-zinc-400">
             No titles match these filters.
           </p>
         )}
 
       <div className="mt-4 grid gap-3">
-        {visibleMediaItems.map((item) => (
+        {sortedMediaItems.map((item) => (
           <MediaCard
             key={item.id}
             item={item}
