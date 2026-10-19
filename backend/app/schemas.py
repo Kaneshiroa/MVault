@@ -4,21 +4,18 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
-UnitType = Literal[
-    "episodes",
-    "chapters",
-    "volumes",
-    "seasons",
-]
+UnitType = Literal["episodes", "chapters"]
 
 
 class MediaItemBase(BaseModel):
+    """Shared fields returned for every media item."""
+
     title: str
     category: str
     format: str
     status: str = "planned"
 
-    progress: int = Field(default=0, ge=0)
+    progress: int = Field(default=1, ge=0)
     total_units: int | None = Field(default=None, ge=1)
     unit_type: UnitType | None = None
     season_number: int | None = Field(default=None, ge=1)
@@ -34,11 +31,14 @@ class MediaItemBase(BaseModel):
 
 
 class MediaItemCreate(MediaItemBase):
-    #Inherits from MediaItemBase and adds any additional fields needed for creating a media item
+    """Fields accepted when creating a media item."""
+
     pass
 
 
 class MediaItemRead(MediaItemBase):
+    """Media item returned by the API."""
+
     id: int
     created_at: datetime
 
@@ -46,6 +46,8 @@ class MediaItemRead(MediaItemBase):
 
 
 class MediaItemUpdate(BaseModel):
+    """Fields that may be changed after a media item is created."""
+
     status: str | None = None
 
     progress: int | None = Field(
@@ -57,8 +59,6 @@ class MediaItemUpdate(BaseModel):
         default=None,
         ge=1,
     )
-
-    unit_type: UnitType | None = None
 
     season_number: int | None = Field(
         default=None,
