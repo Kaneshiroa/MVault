@@ -2,7 +2,7 @@
 
 /**
  * Renders the MVault dashboard shell and controls
- * the Add media drawer plus library refresh cycle.
+ * the Add media drawer, category navigation, and library refresh cycle.
  */
 
 import { useState } from "react";
@@ -13,6 +13,7 @@ import MediaList from "../components/MediaList";
 export default function Home() {
   const [libraryVersion, setLibraryVersion] = useState(0);
   const [isAddPanelOpen, setIsAddPanelOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   function openAddPanel() {
     setIsAddPanelOpen(true);
@@ -26,55 +27,84 @@ export default function Home() {
     setLibraryVersion((currentVersion) => currentVersion + 1);
   }
 
+  function resetCategoryFilter() {
+    setSelectedCategory("all");
+  }
+
+  function selectCategory(category) {
+    setSelectedCategory(category);
+
+    const librarySection = document.getElementById("library");
+
+    if (librarySection) {
+      librarySection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }
+
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
       <header className="border-b border-violet-950 bg-zinc-950">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+        <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 gap-y-4 px-6 py-4 md:grid-cols-[1fr_auto_1fr] md:gap-y-0">
           <Link
             href="/"
+            onClick={resetCategoryFilter}
             className="flex items-center gap-3 text-xl font-black tracking-tight"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-600 text-base text-white shadow-lg shadow-violet-950">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-800 text-base text-white">
               MV
             </span>
 
             <span className="text-violet-300">MVault</span>
           </Link>
 
-          <nav className="flex items-center gap-5 text-sm font-medium text-zinc-400">
-            <a
-              href="#library"
-              className="transition hover:text-violet-300"
-            >
-              Library
-            </a>
-
-            <a
-              href="#library"
-              className="transition hover:text-violet-300"
+          <nav
+            aria-label="Library categories"
+            className="col-span-2 row-start-2 flex items-center justify-self-center gap-5 text-sm font-bold md:col-span-1 md:col-start-2 md:row-start-1"
+          >
+            <button
+              type="button"
+              onClick={() => selectCategory("animated")}
+              className={
+                selectedCategory === "animated"
+                  ? "text-violet-300"
+                  : "text-zinc-300 transition hover:text-violet-300"
+              }
             >
               Animated
-            </a>
+            </button>
 
-            <a
-              href="#library"
-              className="transition hover:text-violet-300"
+            <button
+              type="button"
+              onClick={() => selectCategory("reading")}
+              className={
+                selectedCategory === "reading"
+                  ? "text-violet-300"
+                  : "text-zinc-300 transition hover:text-violet-300"
+              }
             >
               Reading
-            </a>
+            </button>
 
-            <a
-              href="#library"
-              className="transition hover:text-violet-300"
+            <button
+              type="button"
+              onClick={() => selectCategory("live_action")}
+              className={
+                selectedCategory === "live_action"
+                  ? "text-violet-300"
+                  : "text-zinc-300 transition hover:text-violet-300"
+              }
             >
               Live action
-            </a>
+            </button>
           </nav>
 
           <button
             type="button"
             onClick={openAddPanel}
-            className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-500"
+            className="justify-self-end rounded-md bg-violet-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700 md:col-start-3 md:row-start-1"
           >
             Add title
           </button>
@@ -84,12 +114,11 @@ export default function Home() {
       <section className="border-b border-zinc-800 bg-gradient-to-r from-zinc-950 via-violet-950/40 to-zinc-950">
         <div className="mx-auto max-w-7xl px-6 py-10">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400">
-            Personal media tracker
+            Media tracker
           </p>
 
           <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
-            Your collection,{" "}
-            <span className="text-violet-400">organized.</span>
+            One place for <span className="text-violet-400">every title.</span>
           </h1>
 
           <p className="mt-4 max-w-2xl text-zinc-400">
@@ -101,7 +130,12 @@ export default function Home() {
 
       <div className="mx-auto max-w-7xl px-6 py-10">
         <section id="library">
-          <MediaList refreshKey={libraryVersion} />
+          <MediaList
+            refreshKey={libraryVersion}
+            selectedCategory={selectedCategory}
+            onSelectedCategoryChange={setSelectedCategory}
+            onAddTitleClick={openAddPanel}
+          />
         </section>
       </div>
 

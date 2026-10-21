@@ -34,10 +34,12 @@ export default function MediaCard({
   onUpdated,
   onDelete,
   deletingId,
+  activeMode,
+  onStartEditing,
+  onStartDeleting,
+  onCloseAction,
 }) {
-  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [editing, setEditing] = useState(false);
 
   const [editedStatus, setEditedStatus] = useState("");
   const [editedProgress, setEditedProgress] = useState(1);
@@ -48,11 +50,13 @@ export default function MediaCard({
   const [editError, setEditError] = useState("");
 
   const isDeleting = deletingId === item.id;
+  const confirmingDelete = activeMode === "delete";
+  const editing = activeMode === "edit";
   const trackingLabels = getTrackingLabels(item.category);
   const formatLabel = item.format.replace("_", " ");
 
   function startEditing() {
-    setEditing(true);
+    onStartEditing(item.id);
     setEditError("");
 
     setEditedStatus(item.status);
@@ -84,7 +88,6 @@ export default function MediaCard({
   }
 
   function stopEditing() {
-    setEditing(false);
     setEditedStatus("");
     setEditedProgress(1);
     setEditedTotalUnits("");
@@ -92,6 +95,12 @@ export default function MediaCard({
     setEditedRating("");
     setEditedNotes("");
     setEditError("");
+
+    onCloseAction(item.id, "edit");
+  }
+
+  function cancelDelete() {
+    onCloseAction(item.id, "delete");
   }
 
   function preventNumberInputScroll(event) {
@@ -251,14 +260,14 @@ export default function MediaCard({
       </div>
 
       {confirmingDelete ? (
-        <div className="mt-4 flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 border-t border-zinc-800 px-4 py-3">
           <span className="text-sm text-zinc-300">
             Delete this item?
           </span>
 
           <button
             type="button"
-            onClick={() => setConfirmingDelete(false)}
+            onClick={cancelDelete}
             disabled={isDeleting}
             className="rounded-md border border-zinc-600 px-3 py-1 text-sm text-zinc-200 disabled:opacity-50"
           >
@@ -275,18 +284,18 @@ export default function MediaCard({
           </button>
         </div>
       ) : (
-              <div className="flex gap-3 border-t border-zinc-800 px-4 py-3">
+        <div className="flex gap-3 border-t border-zinc-800 px-4 py-3">
           <button
             type="button"
             onClick={startEditing}
-                  className="rounded-md border border-violet-500 px-3 py-1 text-sm text-violet-300 transition hover:bg-violet-950"
+            className="rounded-md border border-violet-500 px-3 py-1 text-sm text-violet-300 transition hover:bg-violet-950"
           >
             Edit
           </button>
 
           <button
             type="button"
-            onClick={() => setConfirmingDelete(true)}
+            onClick={() => onStartDeleting(item.id)}
             className="rounded-md border border-red-500 px-3 py-1 text-sm text-red-400"
           >
             Delete
