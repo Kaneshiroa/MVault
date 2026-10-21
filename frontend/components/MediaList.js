@@ -6,6 +6,7 @@
  */
 
 import { useEffect, useState } from "react";
+import LibrarySidebar from "./LibrarySidebar";
 import MediaCard from "./MediaCard";
 
 const API_URL = "http://127.0.0.1:8000";
@@ -158,11 +159,7 @@ export default function MediaList({ refreshKey }) {
 
     setSelectedCategory(newCategory);
 
-    if (newCategory === "all") {
-      return;
-    }
-
-    if (selectedFormat === "all") {
+    if (newCategory === "all" || selectedFormat === "all") {
       return;
     }
 
@@ -236,100 +233,120 @@ export default function MediaList({ refreshKey }) {
 
   return (
     <section className="mt-10">
-      <h2 className="text-2xl font-semibold">Your library</h2>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-400">
+            Your catalog
+          </p>
 
-      <div className="mt-4 grid gap-4 rounded-xl border border-zinc-800 bg-zinc-900 p-4 md:grid-cols-2 xl:grid-cols-4">
-        <label className="grid gap-2 text-sm">
-          <span className="text-zinc-300">Category</span>
-          <select
-            value={selectedCategory}
-            onChange={handleCategoryFilterChange}
-            className="rounded-md bg-zinc-800 px-3 py-2"
-          >
-            <option value="all">All categories</option>
-            <option value="animated">Animated</option>
-            <option value="reading">Reading</option>
-            <option value="live_action">Live action</option>
-          </select>
-        </label>
+          <h2 className="mt-2 text-3xl font-black">Your library</h2>
+        </div>
 
-        <label className="grid gap-2 text-sm">
-          <span className="text-zinc-300">Format</span>
-          <select
-            value={selectedFormat}
-            onChange={handleFormatFilterChange}
-            className="rounded-md bg-zinc-800 px-3 py-2"
-          >
-            <option value="all">All formats</option>
-
-            {formatOptions.map((format) => (
-              <option key={format.value} value={format.value}>
-                {format.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="grid gap-2 text-sm">
-          <span className="text-zinc-300">Status</span>
-          <select
-            value={selectedStatus}
-            onChange={(event) => setSelectedStatus(event.target.value)}
-            className="rounded-md bg-zinc-800 px-3 py-2"
-          >
-            <option value="all">All statuses</option>
-            <option value="planned">Planned</option>
-            <option value="in_progress">In progress</option>
-            <option value="completed">Completed</option>
-          </select>
-        </label>
-
-        <label className="grid gap-2 text-sm">
-          <span className="text-zinc-300">Sort by</span>
-          <select
-            value={selectedSort}
-            onChange={(event) => setSelectedSort(event.target.value)}
-            className="rounded-md bg-zinc-800 px-3 py-2"
-          >
-            <option value="newest">Recently added</option>
-            <option value="title_ascending">Title A–Z</option>
-            <option value="title_descending">Title Z–A</option>
-            <option value="rating_high">Highest rated</option>
-            <option value="rating_low">Lowest rated</option>
-          </select>
-        </label>
-      </div>
-
-      {message && (
-        <p className="mt-4 text-zinc-400" aria-live="polite">
-          {message}
-        </p>
-      )}
-
-      {!message && mediaItems.length === 0 && (
-        <p className="mt-4 text-zinc-400">
-          Your library is empty. Add your first title above.
-        </p>
-      )}
-
-      {!message &&
-        mediaItems.length > 0 &&
-        sortedMediaItems.length === 0 && (
-          <p className="mt-4 text-zinc-400">
-            No titles match these filters.
+        {!message && mediaItems.length > 0 && (
+          <p className="text-sm text-zinc-400">
+            {sortedMediaItems.length} of {mediaItems.length} titles shown
           </p>
         )}
+      </div>
 
-      <div className="mt-4 grid gap-3">
-        {sortedMediaItems.map((item) => (
-          <MediaCard
-            key={item.id}
-            item={item}
-            onUpdated={handleUpdatedMedia}
-            onDelete={handleDeleteMedia}
-            deletingId={deletingId}
-          />
-        ))}
+      <div className="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_19rem]">
+        <div>
+          <div className="grid gap-4 rounded-xl border border-zinc-800 bg-zinc-900 p-4 md:grid-cols-2">
+            <label className="grid gap-2 text-sm">
+              <span className="text-zinc-300">Category</span>
+              <select
+                value={selectedCategory}
+                onChange={handleCategoryFilterChange}
+                className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+              >
+                <option value="all">All categories</option>
+                <option value="animated">Animated</option>
+                <option value="reading">Reading</option>
+                <option value="live_action">Live action</option>
+              </select>
+            </label>
+
+            <label className="grid gap-2 text-sm">
+              <span className="text-zinc-300">Format</span>
+              <select
+                value={selectedFormat}
+                onChange={handleFormatFilterChange}
+                className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+              >
+                <option value="all">All formats</option>
+
+                {formatOptions.map((format) => (
+                  <option key={format.value} value={format.value}>
+                    {format.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="grid gap-2 text-sm">
+              <span className="text-zinc-300">Status</span>
+              <select
+                value={selectedStatus}
+                onChange={(event) => setSelectedStatus(event.target.value)}
+                className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+              >
+                <option value="all">All statuses</option>
+                <option value="planned">Planned</option>
+                <option value="in_progress">In progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
+
+            <label className="grid gap-2 text-sm">
+              <span className="text-zinc-300">Sort by</span>
+              <select
+                value={selectedSort}
+                onChange={(event) => setSelectedSort(event.target.value)}
+                className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+              >
+                <option value="newest">Recently added</option>
+                <option value="title_ascending">Title A–Z</option>
+                <option value="title_descending">Title Z–A</option>
+                <option value="rating_high">Highest rated</option>
+                <option value="rating_low">Lowest rated</option>
+              </select>
+            </label>
+          </div>
+
+          {message && (
+            <p className="mt-4 text-zinc-400" aria-live="polite">
+              {message}
+            </p>
+          )}
+
+          {!message && mediaItems.length === 0 && (
+            <p className="mt-4 text-zinc-400">
+              Your library is empty. Add your first title above.
+            </p>
+          )}
+
+          {!message &&
+            mediaItems.length > 0 &&
+            sortedMediaItems.length === 0 && (
+              <p className="mt-4 text-zinc-400">
+                No titles match these filters.
+              </p>
+            )}
+
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {sortedMediaItems.map((item) => (
+              <MediaCard
+                key={item.id}
+                item={item}
+                onUpdated={handleUpdatedMedia}
+                onDelete={handleDeleteMedia}
+                deletingId={deletingId}
+              />
+            ))}
+          </div>
+        </div>
+
+        <LibrarySidebar mediaItems={mediaItems} />
       </div>
     </section>
   );

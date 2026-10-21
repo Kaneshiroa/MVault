@@ -25,6 +25,10 @@ function getTrackingLabels(category) {
   };
 }
 
+function getStatusLabel(status) {
+  return status.replace("_", " ");
+}
+
 export default function MediaCard({
   item,
   onUpdated,
@@ -45,6 +49,7 @@ export default function MediaCard({
 
   const isDeleting = deletingId === item.id;
   const trackingLabels = getTrackingLabels(item.category);
+  const formatLabel = item.format.replace("_", " ");
 
   function startEditing() {
     setEditing(true);
@@ -195,44 +200,54 @@ export default function MediaCard({
   }
 
   return (
-    <article className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
-      <h3 className="text-lg font-semibold">{item.title}</h3>
+    <article className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 transition hover:border-violet-700">
+      <div className="flex gap-4 p-4">
+        <div className="flex h-32 w-24 shrink-0 items-center justify-center rounded-lg border border-violet-800 bg-gradient-to-br from-violet-700 via-violet-950 to-zinc-950 p-2 text-center text-xs font-black uppercase tracking-wider text-violet-200 shadow-lg shadow-violet-950/40">
+          {formatLabel}
+        </div>
 
-      <p className="mt-1 text-sm text-zinc-400">
-        {item.category.replace("_", " ")} ·{" "}
-        {item.format.replace("_", " ")} ·{" "}
-        {item.status.replace("_", " ")}
-      </p>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-400">
+                {item.category.replace("_", " ")}
+              </p>
 
-      <div className="mt-4 grid gap-2 text-sm text-zinc-300">
-        <p>
-          <span className="text-zinc-500">Progress:</span>{" "}
+              <h3 className="mt-1 truncate text-lg font-bold text-zinc-100">
+                {item.title}
+              </h3>
+            </div>
 
-          {trackingLabels.showSeason &&
-            item.season_number !== null && (
-              <>Season {item.season_number} · </>
+            <span className="shrink-0 rounded-full bg-violet-950 px-2.5 py-1 text-xs font-semibold capitalize text-violet-300">
+              {getStatusLabel(item.status)}
+            </span>
+          </div>
+
+          <p className="mt-3 text-sm text-zinc-300">
+            {trackingLabels.showSeason &&
+              item.season_number !== null && (
+                <>Season {item.season_number} · </>
+              )}
+
+            {trackingLabels.progress} {item.progress}
+
+            {item.total_units !== null && (
+              <> / {item.total_units}</>
             )}
+          </p>
 
-          {trackingLabels.progress} {item.progress}
-
-          {item.total_units !== null && (
-            <> / {item.total_units}</>
+          {item.rating !== null && (
+            <p className="mt-1 text-sm font-medium text-violet-300">
+              ★ {item.rating} / 10
+            </p>
           )}
-        </p>
 
-        {item.rating !== null && (
-          <p>
-            <span className="text-zinc-500">Rating:</span>{" "}
-            {item.rating} / 10
-          </p>
-        )}
-
-        {item.notes !== null && item.notes !== "" && (
-          <p>
-            <span className="text-zinc-500">Notes:</span>{" "}
-            {item.notes}
-          </p>
-        )}
+          {item.notes !== null && item.notes !== "" && (
+            <p className="mt-2 line-clamp-2 text-sm text-zinc-400">
+              {item.notes}
+            </p>
+          )}
+        </div>
       </div>
 
       {confirmingDelete ? (
@@ -260,11 +275,11 @@ export default function MediaCard({
           </button>
         </div>
       ) : (
-        <div className="mt-4 flex gap-3">
+              <div className="flex gap-3 border-t border-zinc-800 px-4 py-3">
           <button
             type="button"
             onClick={startEditing}
-            className="rounded-md border border-emerald-500 px-3 py-1 text-sm text-emerald-400"
+                  className="rounded-md border border-violet-500 px-3 py-1 text-sm text-violet-300 transition hover:bg-violet-950"
           >
             Edit
           </button>
