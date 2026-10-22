@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ultramarine-200: #c9d4ff;
+  --color-ultramarine-300: #a8b8ff;
+  --color-ultramarine-400: #7894f7;
+  --color-ultramarine-500: #4f70e8;
+  --color-ultramarine-600: #3655d0;
+  --color-ultramarine-700: #273fab;
+  --color-ultramarine-800: #1e307f;
+  --color-ultramarine-900: #17265f;
+  --color-ultramarine-950: #0d163b;
+}
+
 :root {
   --background: #09090b;
   --foreground: #f4f4f5;
@@ -39,6 +51,6 @@ select {
 }
 
 ::selection {
-  background: #7c3aed;
+  background: #3655d0;
   color: #ffffff;
 }

@@ -1,7 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { supabase } from "../lib/supabase";
+
+const AuthContext = createContext(null);
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 export default function AuthGate({ children }) {
   const [session, setSession] = useState(null);
@@ -116,21 +127,14 @@ export default function AuthGate({ children }) {
 
   if (session) {
     return (
-      <>
-        <div className="border-b border-zinc-800 bg-zinc-950 px-6 py-3 text-right text-sm text-zinc-400">
-          <span className="mr-3">{session.user.email}</span>
-
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="font-semibold text-violet-300 transition hover:text-violet-200"
-          >
-            Sign out
-          </button>
-        </div>
-
+      <AuthContext.Provider
+        value={{
+          userEmail: session.user.email ?? "Signed-in user",
+          onSignOut: handleSignOut,
+        }}
+      >
         {children}
-      </>
+      </AuthContext.Provider>
     );
   }
 
@@ -235,9 +239,7 @@ export default function AuthGate({ children }) {
           {isSignUp ? "Already have an account?" : "New to MVault?"}{" "}
           <button
             type="button"
-            onClick={() =>
-              switchMode(isSignUp ? "sign_in" : "sign_up")
-            }
+            onClick={() => switchMode(isSignUp ? "sign_in" : "sign_up")}
             className="font-semibold text-violet-300 transition hover:text-violet-200"
           >
             {isSignUp ? "Sign in" : "Create an account"}

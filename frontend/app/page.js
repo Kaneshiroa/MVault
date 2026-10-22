@@ -8,6 +8,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import AccountMenu from "../components/AccountMenu";
 import AddMediaForm from "../components/AddMediaForm";
 import AuthGate from "../components/AuthGate";
 import MediaList from "../components/MediaList";
@@ -49,7 +50,7 @@ export default function Home() {
   return (
     <AuthGate>
       <main className="min-h-screen bg-zinc-950 text-zinc-100">
-        <header className="border-b border-violet-950 bg-zinc-950">
+        <header className="border-b border-zinc-800 bg-ultramarine-950">
           <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 gap-y-4 px-6 py-4 md:grid-cols-[1fr_auto_1fr] md:gap-y-0">
             <Link
               href="/"
@@ -104,13 +105,17 @@ export default function Home() {
               </button>
             </nav>
 
-            <button
-              type="button"
-              onClick={openAddPanel}
-              className="justify-self-end rounded-md bg-violet-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700 md:col-start-3 md:row-start-1"
-            >
-              Add title
-            </button>
+            <div className="flex items-center justify-self-end gap-3 md:col-start-3 md:row-start-1">
+              <button
+                type="button"
+                onClick={openAddPanel}
+                className="rounded-md bg-violet-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
+              >
+                Add title
+              </button>
+
+              <AccountMenu />
+            </div>
           </div>
         </header>
 
