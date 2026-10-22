@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
+from uuid import UUID
 
-from sqlalchemy import DateTime, Float, Integer, String, Text
+from sqlalchemy import DateTime, Float, Integer, String, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .database import Base
@@ -12,6 +13,12 @@ class MediaItem(Base):
     __tablename__ = "media_items"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+
+    user_id: Mapped[UUID | None] = mapped_column(
+        Uuid,
+        nullable=True,
+        index=True,
+    )
 
     title: Mapped[str] = mapped_column(String(255), index=True)
     category: Mapped[str] = mapped_column(String(30))

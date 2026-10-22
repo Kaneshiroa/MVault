@@ -6,8 +6,7 @@
  */
 
 import { useState } from "react";
-
-const API_URL = "http://127.0.0.1:8000";
+import { authenticatedFetch } from "../lib/api";
 
 const formatsByCategory = {
   animated: [
@@ -55,7 +54,7 @@ export default function AddMediaForm({ onMediaAdded, onClose }) {
     setMessage("");
 
     try {
-      const response = await fetch(`${API_URL}/media/`, {
+      const response = await authenticatedFetch("/media/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

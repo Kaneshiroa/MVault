@@ -6,10 +6,9 @@
  */
 
 import { useEffect, useState } from "react";
+import { authenticatedFetch } from "../lib/api";
 import LibrarySidebar from "./LibrarySidebar";
 import MediaCard from "./MediaCard";
-
-const API_URL = "http://127.0.0.1:8000";
 
 const formatsByCategory = {
   animated: [
@@ -104,10 +103,7 @@ export default function MediaList({
 
   if (selectedSort === "rating_high") {
     sortedMediaItems.sort((firstItem, secondItem) => {
-      if (
-        firstItem.rating === null &&
-        secondItem.rating === null
-      ) {
+      if (firstItem.rating === null && secondItem.rating === null) {
         return 0;
       }
 
@@ -125,10 +121,7 @@ export default function MediaList({
 
   if (selectedSort === "rating_low") {
     sortedMediaItems.sort((firstItem, secondItem) => {
-      if (
-        firstItem.rating === null &&
-        secondItem.rating === null
-      ) {
+      if (firstItem.rating === null && secondItem.rating === null) {
         return 0;
       }
 
@@ -147,7 +140,7 @@ export default function MediaList({
   useEffect(() => {
     async function loadMedia() {
       try {
-        const response = await fetch(`${API_URL}/media/`);
+        const response = await authenticatedFetch("/media/");
 
         if (!response.ok) {
           throw new Error("Could not load your library.");
@@ -290,7 +283,7 @@ export default function MediaList({
     setDeletingId(id);
 
     try {
-      const response = await fetch(`${API_URL}/media/${id}`, {
+      const response = await authenticatedFetch(`/media/${id}`, {
         method: "DELETE",
       });
 

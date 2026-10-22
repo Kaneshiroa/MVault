@@ -6,8 +6,8 @@
  */
 
 import { useState } from "react";
+import { authenticatedFetch } from "../lib/api";
 
-const API_URL = "http://127.0.0.1:8000";
 
 function getTrackingLabels(category) {
   if (category === "reading") {
@@ -185,7 +185,7 @@ export default function MediaCard({
     setEditError("");
 
     try {
-      const response = await fetch(`${API_URL}/media/${item.id}`, {
+      const response = await authenticatedFetch(`/media/${item.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
