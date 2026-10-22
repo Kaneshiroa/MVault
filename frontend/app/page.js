@@ -150,10 +150,10 @@ export default function Home() {
             type="button"
             onClick={closeAddPanel}
             aria-label="Close Add media panel"
-            className="absolute inset-0 cursor-default"
+            className="absolute inset-0 z-0 cursor-default"
           />
 
-          <aside className="relative ml-auto h-full w-full max-w-lg overflow-y-auto border-l border-violet-900 bg-zinc-950 p-6 shadow-2xl shadow-black">
+          <aside className="relative z-10 ml-auto h-full w-full max-w-lg overflow-y-auto border-l border-violet-900 bg-zinc-950 p-6 shadow-2xl shadow-black">
             <AddMediaForm
               onMediaAdded={handleMediaAdded}
               onClose={closeAddPanel}
