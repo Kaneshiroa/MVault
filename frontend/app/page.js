@@ -148,6 +148,24 @@ export default function Home() {
           </section>
         </div>
 
+        <footer className="border-t border-zinc-800">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              This product uses the TMDB API but is not endorsed or certified
+              by TMDB.
+            </p>
+
+            <a
+              href="https://www.themoviedb.org/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-ultramarine-300 transition hover:text-ultramarine-200"
+            >
+              Data and images from TMDB
+            </a>
+          </div>
+        </footer>
+
         {isAddPanelOpen && (
           <div
             className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"

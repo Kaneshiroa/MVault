@@ -8,7 +8,6 @@
 import { useState } from "react";
 import { authenticatedFetch } from "../lib/api";
 
-
 function getTrackingLabels(category) {
   if (category === "reading") {
     return {
@@ -209,44 +208,74 @@ export default function MediaCard({
   }
 
   return (
-    <article className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 transition hover:border-violet-700">
+    <article className="relative isolate overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 transition hover:border-ultramarine-700">
+      {item.backdrop_url && (
+        <img
+          src={item.backdrop_url}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover opacity-30"
+        />
+      )}
+
+      {item.backdrop_url && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950/75"
+        />
+      )}
+
       <div className="flex gap-4 p-4">
-        <div className="flex h-32 w-24 shrink-0 items-center justify-center rounded-lg border border-violet-800 bg-gradient-to-br from-violet-700 via-violet-950 to-zinc-950 p-2 text-center text-xs font-black uppercase tracking-wider text-violet-200 shadow-lg shadow-violet-950/40">
-          {formatLabel}
-        </div>
+        {item.poster_url ? (
+          <img
+            src={item.poster_url}
+            alt={`Poster for ${item.title}`}
+            className="h-32 w-24 shrink-0 rounded-lg border border-ultramarine-800 object-cover shadow-lg shadow-black/40"
+          />
+        ) : (
+          <div className="flex h-32 w-24 shrink-0 items-center justify-center rounded-lg border border-ultramarine-800 bg-gradient-to-br from-ultramarine-700 via-ultramarine-950 to-zinc-950 p-2 text-center text-xs font-black uppercase tracking-wider text-ultramarine-200 shadow-lg shadow-ultramarine-950/40">
+            {formatLabel}
+          </div>
+        )}
 
         <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-400">
+          <div className="flex items-start gap-2">
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ultramarine-400">
                 {item.category.replace("_", " ")}
               </p>
 
-              <h3 className="mt-1 truncate text-lg font-bold text-zinc-100">
-                {item.title}
+              <h3 className="group relative mt-1 text-lg font-bold text-zinc-100">
+                <span className="block truncate">{item.title}</span>
+
+                <span className="pointer-events-none absolute left-0 top-full z-30 mt-2 hidden w-max max-w-xs rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm font-medium text-zinc-100 shadow-xl shadow-black/50 group-hover:block">
+                  {item.title}
+                </span>
               </h3>
             </div>
 
-            <span className="shrink-0 rounded-full bg-violet-950 px-2.5 py-1 text-xs font-semibold capitalize text-violet-300">
+            <span className="shrink-0 rounded-full bg-ultramarine-950 px-2.5 py-1 text-xs font-semibold capitalize text-ultramarine-300">
               {getStatusLabel(item.status)}
             </span>
           </div>
 
-          <p className="mt-3 text-sm text-zinc-300">
-            {trackingLabels.showSeason &&
-              item.season_number !== null && (
-                <>Season {item.season_number} · </>
+          {item.progress > 0 && (
+            <p className="mt-3 text-sm text-zinc-300">
+              {trackingLabels.showSeason &&
+                item.season_number !== null && (
+                  <>Season {item.season_number} · </>
+                )}
+
+              {trackingLabels.progress} {item.progress}
+
+              {item.total_units !== null && (
+                <> / {item.total_units}</>
               )}
-
-            {trackingLabels.progress} {item.progress}
-
-            {item.total_units !== null && (
-              <> / {item.total_units}</>
-            )}
-          </p>
+            </p>
+          )}
 
           {item.rating !== null && (
-            <p className="mt-1 text-sm font-medium text-violet-300">
+            <p className="mt-1 text-sm font-medium text-ultramarine-300">
               ★ {item.rating} / 10
             </p>
           )}
@@ -260,7 +289,7 @@ export default function MediaCard({
       </div>
 
       {confirmingDelete ? (
-        <div className="flex flex-wrap items-center gap-3 border-t border-zinc-800 px-4 py-3">
+        <div className="flex flex-wrap items-center gap-3 border-t border-zinc-800 bg-zinc-900/80 px-4 py-3 backdrop-blur-sm">
           <span className="text-sm text-zinc-300">
             Delete this item?
           </span>
@@ -284,11 +313,11 @@ export default function MediaCard({
           </button>
         </div>
       ) : (
-        <div className="flex gap-3 border-t border-zinc-800 px-4 py-3">
+        <div className="flex gap-3 border-t border-zinc-800 bg-zinc-900/80 px-4 py-3 backdrop-blur-sm">
           <button
             type="button"
             onClick={startEditing}
-            className="rounded-md border border-violet-500 px-3 py-1 text-sm text-violet-300 transition hover:bg-violet-950"
+            className="rounded-md border border-ultramarine-500 px-3 py-1 text-sm text-ultramarine-300 transition hover:bg-ultramarine-950"
           >
             Edit
           </button>
@@ -304,7 +333,7 @@ export default function MediaCard({
       )}
 
       {editing && (
-        <div className="mt-4 grid gap-4 rounded-md bg-zinc-800 p-4">
+        <div className="mt-4 grid gap-4 bg-zinc-800/95 p-4 backdrop-blur-sm">
           <p className="text-sm text-zinc-300">
             Editing {item.title}
           </p>

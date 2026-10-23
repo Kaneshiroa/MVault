@@ -15,7 +15,7 @@ class MediaItemBase(BaseModel):
     format: str
     status: str = "planned"
 
-    progress: int = Field(default=1, ge=0)
+    progress: int = Field(default=0, ge=0)
     total_units: int | None = Field(default=None, ge=1)
     unit_type: UnitType | None = None
     season_number: int | None = Field(default=None, ge=1)
@@ -28,6 +28,11 @@ class MediaItemBase(BaseModel):
     )
 
     notes: str | None = None
+
+    poster_url: str | None = None
+    backdrop_url: str | None = None
+    metadata_source: str | None = Field(default=None, max_length=30)
+    metadata_id: str | None = Field(default=None, max_length=100)
 
 
 class MediaItemCreate(MediaItemBase):
@@ -73,3 +78,22 @@ class MediaItemUpdate(BaseModel):
     )
 
     notes: str | None = None
+
+
+class MetadataSearchResult(BaseModel):
+    """One normalized title result from an external metadata source."""
+
+    source: Literal["tmdb", "anilist"]
+    source_id: str
+    title: str
+    media_type: Literal["movie", "tv", "anime", "manga"]
+    release_year: str | None = None
+    overview: str | None = None
+    poster_url: str | None = None
+    backdrop_url: str | None = None
+
+
+class MetadataSearchResponse(BaseModel):
+    """Search results returned to the MVault frontend."""
+
+    results: list[MetadataSearchResult]

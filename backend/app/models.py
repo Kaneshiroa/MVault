@@ -25,13 +25,24 @@ class MediaItem(Base):
     format: Mapped[str] = mapped_column(String(30))
     status: Mapped[str] = mapped_column(String(30), default="planned")
 
-    progress: Mapped[int] = mapped_column(Integer, default=1)
+    progress: Mapped[int] = mapped_column(Integer, default=0)
     total_units: Mapped[int | None] = mapped_column(Integer, nullable=True)
     unit_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
     season_number: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
     rating: Mapped[float | None] = mapped_column(Float, nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    poster_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    backdrop_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    metadata_source: Mapped[str | None] = mapped_column(
+        String(30),
+        nullable=True,
+    )
+    metadata_id: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
