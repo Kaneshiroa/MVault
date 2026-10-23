@@ -196,10 +196,10 @@ export default function MediaCard({
     if (editedRating !== "") {
       ratingNumber = Number(editedRating);
 
-      const isHalfPoint = Number.isInteger(ratingNumber * 2);
+      const isTenthPoint = Number.isInteger(ratingNumber * 10);
 
-      if (ratingNumber < 1 || ratingNumber > 10 || !isHalfPoint) {
-        setEditError("Rating must be from 1 to 10 in 0.5 increments.");
+      if (ratingNumber < 1 || ratingNumber > 10 || !isTenthPoint) {
+        setEditError("Rating must be from 1 to 10 in 0.1 increments.");
         return;
       }
     }
@@ -425,12 +425,12 @@ export default function MediaCard({
             )}
 
             <label className="grid gap-2 text-sm">
-              <span>Rating (1–10, half points allowed)</span>
+              <span>Rating (1–10, tenths allowed)</span>
               <input
                 type="number"
                 min="1"
                 max="10"
-                step="0.5"
+                step="0.1"
                 value={editedRating}
                 onChange={(event) => setEditedRating(event.target.value)}
                 onWheel={preventNumberInputScroll}

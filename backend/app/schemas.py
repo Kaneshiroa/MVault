@@ -24,7 +24,7 @@ class MediaItemBase(BaseModel):
         default=None,
         ge=1,
         le=10,
-        multiple_of=0.5,
+        multiple_of=0.1,
     )
 
     notes: str | None = None
@@ -74,7 +74,7 @@ class MediaItemUpdate(BaseModel):
         default=None,
         ge=1,
         le=10,
-        multiple_of=0.5,
+        multiple_of=0.1,
     )
 
     notes: str | None = None
