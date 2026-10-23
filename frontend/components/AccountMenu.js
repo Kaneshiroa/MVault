@@ -45,7 +45,7 @@ export default function AccountMenu() {
         aria-label="Open account menu"
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-violet-700 bg-violet-950 text-sm font-black text-violet-200 transition hover:border-violet-500 hover:bg-violet-900"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-ultramarine-700 bg-ultramarine-950 text-sm font-black text-ultramarine-200 transition hover:border-ultramarine-500 hover:bg-ultramarine-900"
       >
         {accountInitial}
       </button>

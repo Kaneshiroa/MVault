@@ -144,11 +144,11 @@ export default function AuthGate({ children }) {
     <main className="flex min-h-screen items-center justify-center bg-zinc-950 px-6 py-12 text-zinc-100">
       <section className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900/70 p-7 shadow-2xl shadow-black sm:p-9">
         <div className="mb-8">
-          <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-violet-800 text-sm font-black text-white">
+          <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-ultramarine-800 text-sm font-black text-white">
             MV
           </div>
 
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-violet-400">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-ultramarine-400">
             Media tracker
           </p>
 
@@ -172,7 +172,7 @@ export default function AuthGate({ children }) {
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
               required
-              className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-violet-500"
+              className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-ultramarine-500"
               placeholder="you@example.com"
             />
           </label>
@@ -186,7 +186,7 @@ export default function AuthGate({ children }) {
               autoComplete={isSignUp ? "new-password" : "current-password"}
               minLength="6"
               required
-              className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-violet-500"
+              className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-ultramarine-500"
               placeholder="At least 6 characters"
             />
           </label>
@@ -201,7 +201,7 @@ export default function AuthGate({ children }) {
                 autoComplete="new-password"
                 minLength="6"
                 required
-                className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-violet-500"
+                className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-ultramarine-500"
                 placeholder="Enter your password again"
               />
             </label>
@@ -225,7 +225,7 @@ export default function AuthGate({ children }) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-violet-700 px-4 py-3 text-sm font-bold text-white transition hover:bg-violet-600 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-ultramarine-700 px-4 py-3 text-sm font-bold text-white transition hover:bg-ultramarine-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting
               ? "Please wait…"
@@ -240,7 +240,7 @@ export default function AuthGate({ children }) {
           <button
             type="button"
             onClick={() => switchMode(isSignUp ? "sign_in" : "sign_up")}
-            className="font-semibold text-violet-300 transition hover:text-violet-200"
+            className="font-semibold text-ultramarine-300 transition hover:text-ultramarine-200"
           >
             {isSignUp ? "Sign in" : "Create an account"}
           </button>

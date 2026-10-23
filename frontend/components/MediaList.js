@@ -307,7 +307,7 @@ export default function MediaList({
     <section className="mt-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ultramarine-400">
             Your catalog
           </p>
 
@@ -334,7 +334,7 @@ export default function MediaList({
                   type="button"
                   onClick={clearFilters}
                   disabled={!hasActiveFilters}
-                  className="rounded-md border border-violet-700 px-3 py-1.5 text-sm font-medium text-violet-300 transition hover:bg-violet-950 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="rounded-md border border-ultramarine-700 px-3 py-1.5 text-sm font-medium text-ultramarine-300 transition hover:bg-ultramarine-950 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Clear filters
                 </button>
@@ -346,7 +346,7 @@ export default function MediaList({
                   <select
                     value={selectedCategory}
                     onChange={handleCategoryFilterChange}
-                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-ultramarine-500"
                   >
                     <option value="all">All categories</option>
                     <option value="animated">Animated</option>
@@ -360,7 +360,7 @@ export default function MediaList({
                   <select
                     value={selectedFormat}
                     onChange={handleFormatFilterChange}
-                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-ultramarine-500"
                   >
                     <option value="all">All formats</option>
 
@@ -377,7 +377,7 @@ export default function MediaList({
                   <select
                     value={selectedStatus}
                     onChange={(event) => setSelectedStatus(event.target.value)}
-                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-ultramarine-500"
                   >
                     <option value="all">All statuses</option>
                     <option value="planned">Planned</option>
@@ -391,7 +391,7 @@ export default function MediaList({
                   <select
                     value={selectedSort}
                     onChange={(event) => setSelectedSort(event.target.value)}
-                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-violet-500"
+                    className="rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 outline-none focus:border-ultramarine-500"
                   >
                     <option value="newest">Recently added</option>
                     <option value="title_ascending">Title A–Z</option>
@@ -411,8 +411,8 @@ export default function MediaList({
           )}
 
           {!message && mediaItems.length === 0 && (
-            <div className="mt-5 rounded-xl border border-dashed border-violet-800 bg-violet-950/20 px-6 py-12 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400">
+            <div className="mt-5 rounded-xl border border-dashed border-ultramarine-800 bg-ultramarine-950/20 px-6 py-12 text-center">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-ultramarine-400">
                 Your first title
               </p>
 
@@ -427,7 +427,7 @@ export default function MediaList({
               <button
                 type="button"
                 onClick={onAddTitleClick}
-                className="mt-6 rounded-md bg-violet-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
+                className="mt-6 rounded-md bg-ultramarine-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-ultramarine-700"
               >
                 Add your first title
               </button>
@@ -450,7 +450,7 @@ export default function MediaList({
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="mt-6 rounded-md border border-violet-700 px-4 py-2 text-sm font-semibold text-violet-300 transition hover:bg-violet-950"
+                  className="mt-6 rounded-md border border-ultramarine-700 px-4 py-2 text-sm font-semibold text-ultramarine-300 transition hover:bg-ultramarine-950"
                 >
                   Clear filters
                 </button>

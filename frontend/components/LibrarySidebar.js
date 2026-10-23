@@ -42,8 +42,8 @@ export default function LibrarySidebar({ mediaItems }) {
 
   return (
     <aside className="h-fit space-y-5 xl:sticky xl:top-6">
-      <section className="rounded-xl border border-violet-950 bg-zinc-900 p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-400">
+      <section className="rounded-xl border border-ultramarine-950 bg-zinc-900 p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ultramarine-400">
           Your dashboard
         </p>
 
@@ -51,14 +51,14 @@ export default function LibrarySidebar({ mediaItems }) {
 
         <div className="mt-5 grid grid-cols-2 gap-3">
           <div className="rounded-lg bg-zinc-800 p-3">
-            <p className="text-2xl font-bold text-violet-300">
+            <p className="text-2xl font-bold text-ultramarine-300">
               {mediaItems.length}
             </p>
             <p className="mt-1 text-xs text-zinc-400">Total titles</p>
           </div>
 
           <div className="rounded-lg bg-zinc-800 p-3">
-            <p className="text-2xl font-bold text-violet-300">
+            <p className="text-2xl font-bold text-ultramarine-300">
               {inProgressCount}
             </p>
             <p className="mt-1 text-xs text-zinc-400">In progress</p>
@@ -128,7 +128,7 @@ export default function LibrarySidebar({ mediaItems }) {
               className="flex items-center justify-between gap-3"
             >
               <div className="flex min-w-0 items-center gap-3">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-950 text-xs font-bold text-violet-300">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ultramarine-950 text-xs font-bold text-ultramarine-300">
                   {index + 1}
                 </span>
 
@@ -143,7 +143,7 @@ export default function LibrarySidebar({ mediaItems }) {
                 </div>
               </div>
 
-              <span className="shrink-0 text-sm font-semibold text-violet-300">
+              <span className="shrink-0 text-sm font-semibold text-ultramarine-300">
                 {item.rating} / 10
               </span>
             </div>

@@ -57,11 +57,11 @@ export default function Home() {
               onClick={resetCategoryFilter}
               className="flex items-center gap-3 text-xl font-black tracking-tight"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-800 text-base text-white">
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-ultramarine-800 text-base text-white">
                 MV
               </span>
 
-              <span className="text-violet-300">MVault</span>
+              <span className="text-ultramarine-300">MVault</span>
             </Link>
 
             <nav
@@ -73,8 +73,8 @@ export default function Home() {
                 onClick={() => selectCategory("animated")}
                 className={
                   selectedCategory === "animated"
-                    ? "text-violet-300"
-                    : "text-zinc-300 transition hover:text-violet-300"
+                    ? "text-ultramarine-300"
+                    : "text-zinc-300 transition hover:text-ultramarine-300"
                 }
               >
                 Animated
@@ -85,8 +85,8 @@ export default function Home() {
                 onClick={() => selectCategory("reading")}
                 className={
                   selectedCategory === "reading"
-                    ? "text-violet-300"
-                    : "text-zinc-300 transition hover:text-violet-300"
+                    ? "text-ultramarine-300"
+                    : "text-zinc-300 transition hover:text-ultramarine-300"
                 }
               >
                 Reading
@@ -97,8 +97,8 @@ export default function Home() {
                 onClick={() => selectCategory("live_action")}
                 className={
                   selectedCategory === "live_action"
-                    ? "text-violet-300"
-                    : "text-zinc-300 transition hover:text-violet-300"
+                    ? "text-ultramarine-300"
+                    : "text-zinc-300 transition hover:text-ultramarine-300"
                 }
               >
                 Live action
@@ -109,7 +109,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={openAddPanel}
-                className="rounded-md bg-violet-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
+                className="rounded-md bg-ultramarine-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-ultramarine-700"
               >
                 Add title
               </button>
@@ -119,15 +119,15 @@ export default function Home() {
           </div>
         </header>
 
-        <section className="border-b border-zinc-800 bg-gradient-to-r from-zinc-950 via-violet-950/40 to-zinc-950">
+        <section className="border-b border-zinc-800 bg-gradient-to-r from-zinc-950 via-ultramarine-950/40 to-zinc-950">
           <div className="mx-auto max-w-7xl px-6 py-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-ultramarine-400">
               Media tracker
             </p>
 
             <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
               One place for{" "}
-              <span className="text-violet-400">every title.</span>
+              <span className="text-ultramarine-400">every title.</span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-zinc-400">
@@ -180,7 +180,7 @@ export default function Home() {
               className="absolute inset-0 z-0 cursor-default"
             />
 
-            <aside className="relative z-10 ml-auto h-full w-full max-w-lg overflow-y-auto border-l border-violet-900 bg-zinc-950 p-6 shadow-2xl shadow-black">
+            <aside className="relative z-10 ml-auto h-full w-full max-w-lg overflow-y-auto border-l border-ultramarine-900 bg-zinc-950 p-6 shadow-2xl shadow-black">
               <AddMediaForm
                 onMediaAdded={handleMediaAdded}
                 onClose={closeAddPanel}
