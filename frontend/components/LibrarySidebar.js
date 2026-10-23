@@ -143,7 +143,7 @@ export default function LibrarySidebar({ mediaItems }) {
                 </div>
               </div>
 
-              <span className="shrink-0 pr-2 text-right text-sm font-semibold text-ultramarine-300">
+              <span className="shrink-0 pr-5 text-right text-sm font-semibold text-ultramarine-300">
                 {item.rating} / 10
               </span>
             </div>
