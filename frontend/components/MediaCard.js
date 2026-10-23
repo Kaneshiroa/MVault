@@ -40,6 +40,8 @@ export default function MediaCard({
 }) {
   const [saving, setSaving] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [adjustingProgress, setAdjustingProgress] = useState(false);
+  const [progressError, setProgressError] = useState("");
 
   const [editedStatus, setEditedStatus] = useState("");
   const [editedProgress, setEditedProgress] = useState(1);
@@ -105,6 +107,49 @@ export default function MediaCard({
 
   function preventNumberInputScroll(event) {
     event.currentTarget.blur();
+  }
+
+  async function adjustProgress(amount) {
+    const currentProgress = Number(item.progress) || 0;
+    const nextProgress = Math.max(0, currentProgress + amount);
+
+    if (
+      item.total_units !== null &&
+      nextProgress > item.total_units
+    ) {
+      return;
+    }
+
+    if (nextProgress === currentProgress) {
+      return;
+    }
+
+    setAdjustingProgress(true);
+    setProgressError("");
+
+    try {
+      const response = await authenticatedFetch(`/media/${item.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          progress: nextProgress,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Could not update progress.");
+      }
+
+      const updatedMedia = await response.json();
+
+      onUpdated(updatedMedia);
+    } catch (error) {
+      setProgressError(error.message);
+    } finally {
+      setAdjustingProgress(false);
+    }
   }
 
   async function handleSave() {
@@ -508,22 +553,54 @@ export default function MediaCard({
                     Your progress
                   </p>
 
-                  {item.progress > 0 ? (
-                    <p className="mt-3 text-lg font-bold text-zinc-100">
-                      {trackingLabels.showSeason &&
-                        item.season_number !== null && (
-                          <>Season {item.season_number} · </>
-                        )}
+                  <div className="mt-4 flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => adjustProgress(-1)}
+                      disabled={adjustingProgress || item.progress <= 0}
+                      aria-label={`Decrease ${trackingLabels.progress.toLowerCase()}`}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-zinc-600 text-lg font-bold text-zinc-200 transition hover:border-ultramarine-500 hover:text-ultramarine-300 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      −
+                    </button>
 
-                      {trackingLabels.progress} {item.progress}
+                    <p className="min-w-0 flex-1 text-center text-sm font-semibold text-zinc-100">
+                      {item.progress > 0 ? (
+                        <>
+                          {trackingLabels.showSeason &&
+                            item.season_number !== null && (
+                              <>Season {item.season_number} · </>
+                            )}
 
-                      {item.total_units !== null && (
-                        <> / {item.total_units}</>
+                          {trackingLabels.progress} {item.progress}
+
+                          {item.total_units !== null && (
+                            <> / {item.total_units}</>
+                          )}
+                        </>
+                      ) : (
+                        "Not started"
                       )}
                     </p>
-                  ) : (
-                    <p className="mt-3 text-zinc-400">
-                      No progress tracked yet.
+
+                    <button
+                      type="button"
+                      onClick={() => adjustProgress(1)}
+                      disabled={
+                        adjustingProgress ||
+                        (item.total_units !== null &&
+                          item.progress >= item.total_units)
+                      }
+                      aria-label={`Increase ${trackingLabels.progress.toLowerCase()}`}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-ultramarine-600 text-lg font-bold text-ultramarine-300 transition hover:bg-ultramarine-950 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {progressError && (
+                    <p className="mt-3 text-sm text-red-400" aria-live="polite">
+                      {progressError}
                     </p>
                   )}
                 </div>
